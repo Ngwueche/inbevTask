@@ -21,7 +21,7 @@ export default function NavBar() {
         <div className="text-white font-bold text-xl">
           In<span className='text-[#E8C025] italic'>Bev</span>
         </div>
-        <div className="hidden md:flex gap-8 space-x-4">
+        <div className="hidden md:flex gap-8 ">
           <div className='relative'>
           <AiOutlineShoppingCart
             className="text-white text-2xl cursor-pointer "/>
