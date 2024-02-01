@@ -14,13 +14,6 @@ export default function NavBar() {
   };
 
 
-  // const handleAddToCart = (product: Product) => {
-  //   setCart((prevCart) => [...prevCart, product]);
-  // };
-
-  // const totalItemsInCart = cart.length;
-  // const addToCart = () => {
-  //   setCartCount((prevCount) => prevCount + 1);
  const {cart} = useCart();
   return (
     <nav className="bg-gray-800 p-4">
@@ -28,7 +21,7 @@ export default function NavBar() {
         <div className="text-white font-bold text-xl">
           In<span className='text-[#E8C025] italic'>Bev</span>
         </div>
-        <div className="hidden md:flex space-x-4">
+        <div className="hidden md:flex gap-8 space-x-4">
           <div className='relative'>
           <AiOutlineShoppingCart
             className="text-white text-2xl cursor-pointer "/>
@@ -45,9 +38,7 @@ export default function NavBar() {
             className="text-white text-2xl cursor-pointer "/>
             <p className="text-white text-xl absolute top-0 left-6"><sup className='rounded p-[2px] font-bold bg-red-600'>{cart.length}</sup></p>
           </div>
-            {cart.length > 0 && (
-              <span className="text-white ml-1">{cart.length}</span>
-            )}
+            
           </div>
           <div className="md:hidden">
             {isMenuOpen ? (
@@ -65,7 +56,7 @@ export default function NavBar() {
         </div>
       </div>
       {isMenuOpen && (
-        <div className="md:hidden mt-4">
+        <div className="md:hidden flex flex-col gap-3 mt-4">
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
         </div>

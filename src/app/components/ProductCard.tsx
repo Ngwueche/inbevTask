@@ -19,13 +19,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product,onAddToCart }) => {
             <h5 className="text-lg mb-4 font-semibold tracking-tight text-gray-900 dark:text-white">{product.title}</h5>
             <h6 className="text-[12px] font-semibold tracking-tight text-gray-900 dark:text-white">{product.description}</h6>
         </div>
-        <div className="flex items-center mt-2.5 mb-5">
+        <div className="flex items-center mt-1 mb-5">
             <span className="text-2xl font-bold text-gray-900 dark:text-white">${product.price.toFixed(2)}</span>
         </div>
         <div className="flex items-center justify-between">
             <button
           onClick={() => onAddToCart(product)}
-          className="bg-blue-500 text-white px-3 py-1 rounded-md w-full"
+          className="bg-blue-500 hover:bg-blue-900 text-white px-3 py-1 rounded-md w-full"
         >
           Add to Cart
         </button>

@@ -3,6 +3,8 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import Product from '../types/Product';
 import ProductCard from '../components/ProductCard';
 import { useCart } from '../utilities/CartContext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ProductsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -13,6 +15,14 @@ const ProductsPage: React.FC = () => {
  
   const handleAddToCart = (product: Product) => {
     context.updateCart(product); 
+    toast.success(`${product.title} added to the cart!`, {
+      position: 'top-right',
+      autoClose: 3000, // Close the toast after 3000 milliseconds (3 seconds)
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
   
   useEffect(() => {
@@ -56,8 +66,8 @@ const ProductsPage: React.FC = () => {
   return (
 <div className=" mx-8 flex flex-col md:flex-row items-center md:items-start">
   {/* Left Sidebar */}
-  <div className="w-1/6 p-4 ">
-    <h2 className="text-lg font-bold mb-4 text-white">Sort Options</h2>
+  <div className="md:w-1/6 p-4 ">
+    <h2 className="text-lg w-full font-bold mb-4 text-white">Sort Options</h2>
     <div className="mb-4">
       <select
         value={sortOrder}
@@ -76,7 +86,7 @@ const ProductsPage: React.FC = () => {
     </button>
   </div>
 {/* divider */}
-<div className=' w-[1px] bg-white mx-4'></div>
+<div className=' w-1/10 bg-white mx-4'></div>
 
   {/* Main Content */}
   <div className="w-3/4 ">
