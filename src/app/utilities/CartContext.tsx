@@ -1,21 +1,29 @@
+"use client";
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import Product from '../types/Product';
 
 interface CartContextProps {
-  cartCount: number;
-  updateCartCount: (count: number) => void;
+ 
+  cart: Product[];
+  
+  updateCart: (product: Product) => void;
 }
 
-const CartContext = createContext<CartContextProps | undefined>(undefined);
+const CartContext = createContext<CartContextProps | null>(null);
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [cartCount, setCartCount] = useState(0);
 
-  const updateCartCount = (count: number) => {
-    setCartCount(count);
-  };
+  const [cart, setCart] = useState<Product[]>([]);
+
+  const updateCart = (product: Product) => {
+    setCart((prevCart) => [...prevCart, product]);
+  }
+  
+
+
 
   return (
-    <CartContext.Provider value={{ cartCount, updateCartCount }}>
+    <CartContext.Provider value={{  cart, updateCart}}>
       {children}
     </CartContext.Provider>
   );

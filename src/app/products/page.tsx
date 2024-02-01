@@ -2,15 +2,19 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import Product from '../types/Product';
 import ProductCard from '../components/ProductCard';
+import { useCart } from '../utilities/CartContext';
 
 const ProductsPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [cart, setCart] = useState<Product[]>([]);
-
-
+  const context = useCart();
+ 
+  const handleAddToCart = (product: Product) => {
+    context.updateCart(product); 
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,48 +52,46 @@ const ProductsPage: React.FC = () => {
 
     setFilteredProducts(sortedProducts);
   };
-  const handleAddToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
-  };
-
-  const totalItemsInCart = cart.length;
 
   return (
-    <div className="container mx-auto px-4">
-    <div className="my-4">
+<div className=" mx-8 flex flex-col md:flex-row items-center md:items-start">
+  {/* Left Sidebar */}
+  <div className="w-1/6 p-4 ">
+    <h2 className="text-lg font-bold mb-4 text-white">Sort Options</h2>
+    <div className="mb-4">
+      <select
+        value={sortOrder}
+        onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
+        className="w-full bg-gray-100 px-3 py-2 rounded-md text-black"
+      >
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+    </div>
+    <button
+      onClick={handleSort}
+      className="bg-blue-500 text-white px-4 py-2 rounded-md"
+    >
+      Sort by Price
+    </button>
+  </div>
+{/* divider */}
+<div className=' w-[1px] bg-white mx-4'></div>
+
+  {/* Main Content */}
+  <div className="w-3/4 ">
+    <div className="my-4 w-full flex justify-center">
       <input
         type="text"
         placeholder="Search by name"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-md"
+        className="w-2/4 text-black px-4 py-2 border border-gray-300 rounded-md "
       />
     </div>
-
-    <div className="flex items-center my-4">
-        <button
-          onClick={handleSort}
-          className="mr-4 bg-blue-500 text-white px-4 py-2 rounded-md"
-        >
-          Sort by Price
-        </button>
-        <label className="mr-2">Sort Order:</label>
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value as 'asc' | 'desc')}
-          className="bg-gray-100 px-2 py-1 rounded-md"
-        >
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
-        </select>
-      </div>
-
-    <div className="flex items-center my-4">
-      <p className="mr-4">Total items in cart: {totalItemsInCart}</p>
-    </div>
-
+      
     {filteredProducts.length > 0 ? (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 pb-4">
         {filteredProducts.map((product) => (
           <ProductCard
             key={product.id}
@@ -104,6 +106,8 @@ const ProductsPage: React.FC = () => {
       </p>
     )}
   </div>
+</div>
+
   );
 };
 

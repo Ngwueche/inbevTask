@@ -3,16 +3,25 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { AiOutlineClose, AiOutlineShoppingCart } from 'react-icons/ai';
+import { useCart } from '../utilities/CartContext';
 
 export default function NavBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
+  
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
 
+  // const handleAddToCart = (product: Product) => {
+  //   setCart((prevCart) => [...prevCart, product]);
+  // };
+
+  // const totalItemsInCart = cart.length;
+  // const addToCart = () => {
+  //   setCartCount((prevCount) => prevCount + 1);
+ const {cart} = useCart();
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-4 flex justify-between items-center">
@@ -20,22 +29,24 @@ export default function NavBar() {
           In<span className='text-[#E8C025] italic'>Bev</span>
         </div>
         <div className="hidden md:flex space-x-4">
+          <div className='relative'>
           <AiOutlineShoppingCart
-            className="text-white text-2xl cursor-pointer"
-            
-          />
+            className="text-white text-2xl cursor-pointer "/>
+            <p className="text-white text-xl absolute top-0 left-6"><sup className='rounded p-[2px] font-bold bg-red-600'>{cart.length}</sup></p>
+          </div>
           <Link href="../products">Products</Link>
           <Link href="/">Home</Link>
           <Link href="/about">About</Link>
         </div>
         <div className="flex items-center">
           <div className="mr-4 md:hidden">
-            <AiOutlineShoppingCart
-              className="text-white text-2xl cursor-pointer"
-              
-            />
-            {cartCount > 0 && (
-              <span className="text-white ml-1">{cartCount}</span>
+          <div className='relative'>
+          <AiOutlineShoppingCart
+            className="text-white text-2xl cursor-pointer "/>
+            <p className="text-white text-xl absolute top-0 left-6"><sup className='rounded p-[2px] font-bold bg-red-600'>{cart.length}</sup></p>
+          </div>
+            {cart.length > 0 && (
+              <span className="text-white ml-1">{cart.length}</span>
             )}
           </div>
           <div className="md:hidden">
